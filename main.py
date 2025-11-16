@@ -1,10 +1,7 @@
 import numpy as np
 import csv
 
-# ------------------------------
-# 1. Wczytywanie prostej bazy filmów
-# ------------------------------
-
+# Wczytanie testowej bazy
 movies = []
 with open("movies.csv", "r", encoding="utf-8") as f:
     reader = csv.DictReader(f)
@@ -15,10 +12,7 @@ print("Wczytano filmy:")
 for m in movies:
     print(" -", m["title"])
 
-# ------------------------------
-# 2. Prosty preprocessing
-# ------------------------------
-
+# Mapowanie gatunków na liczby
 def genre_to_number(genre):
     mapping = {"Action":0, "Drama":1, "Comedy":2}
     return mapping.get(genre, 0)
@@ -38,16 +32,13 @@ X = (X - X.mean(axis=0)) / X.std(axis=0)  # normalizacja
 # Losowe "targety", żeby model miał co trenować
 y = np.random.rand(len(X), 1)
 
-# ------------------------------
-# 3. PROSTA SIEĆ MLP OD ZERA
-# ------------------------------
-
+# Prosta sieć MLP z jedną ukrytą warstwą
 np.random.seed(0)
 
-W1 = np.random.randn(4, 5) * 0.1   # 4 cechy → 5 neuronów
+W1 = np.random.randn(4, 5) * 0.1   # 4 cechy - 5 neuronów
 b1 = np.zeros((1, 5))
 
-W2 = np.random.randn(5, 1) * 0.1   # 5 neuronów → 1 wynik
+W2 = np.random.randn(5, 1) * 0.1   # 5 neuronów - 1 wynik
 b2 = np.zeros((1, 1))
 
 
@@ -57,10 +48,7 @@ def relu(x):
 def relu_deriv(x):
     return (x > 0).astype(float)
 
-# ------------------------------
-# 4. Trenowanie (backprop)
-# ------------------------------
-
+# Trenowanie
 lr = 0.01
 epochs = 300
 
@@ -97,10 +85,7 @@ for epoch in range(epochs):
 
 print("\nModel wytrenowany!\n")
 
-# ------------------------------
-# 5. Użytkownik podaje CECHY
-# ------------------------------
-
+# Podnie cech przez użytkownika
 print("Podaj swoje preferencje filmu:")
 
 user_genre = input("Gatunek (Action/Drama/Comedy): ")
@@ -118,10 +103,7 @@ user_vec = np.array([
 # normalizacja tak samo jak dane
 user_vec = (user_vec - X.mean(axis=0)) / X.std(axis=0)
 
-# ------------------------------
-# 6. Obliczamy dopasowanie dla KAŻDEGO filmu
-# ------------------------------
-
+# Obliczamy dopasowanie
 print("\nREKOMENDACJE:")
 
 for i, m in enumerate(movies):
