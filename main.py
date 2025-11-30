@@ -1,9 +1,6 @@
 import numpy as np
 import csv
-
-# ==========================================
 # 1. KONFIGURACJA WAG PRZEZ UŻYTKOWNIKA
-# ==========================================
 print("\n--- KONFIGURACJA WAG (Priorytety) ---")
 print("Określ, co jest dla Ciebie ważne w skali 1-3:")
 print("(1 - mało ważne, 2 - średnio, 3 - kluczowe)")
@@ -25,9 +22,7 @@ W_LENGTH = w_len_usr * 0.5    # Długość ma mniejszy wpływ naturalnie
 W_BUDGET = w_budget_usr
 W_RATING = w_rating_usr * 1.5
 
-# ==========================================
 # 2. WCZYTANIE DANYCH
-# ==========================================
 movies = []
 filename = "movies.csv"
 
@@ -41,9 +36,8 @@ except FileNotFoundError:
     print(f"[BŁĄD] Nie znaleziono pliku {filename}. Upewnij się, że jest w folderze!")
     exit()
 
-# ==========================================
+
 # 3. PREPROCESSING (One-Hot + Z-Score)
-# ==========================================
 
 # A. One-Hot: Znajdź unikalne gatunki
 unique_genres = sorted(list(set(m["genre"] for m in movies)))
@@ -86,9 +80,9 @@ X[:, -num_cols_count:] = (X[:, -num_cols_count:] - feat_mean) / feat_std
 y_max = 10.0
 y_norm = y / y_max
 
-# ==========================================
+
 # 4. TRENOWANIE SIECI (MLP)
-# ==========================================
+
 print("\n[AI] Trenowanie sieci neuronowej (uczenie się zależności)...")
 
 input_size = X.shape[1]
@@ -133,9 +127,9 @@ for epoch in range(epochs):
 
 print(f"[AI] Trening zakończony. Loss: {loss:.5f}")
 
-# ==========================================
+
 # 5. DANE OD UŻYTKOWNIKA (PREFERENCJE)
-# ==========================================
+
 print("\n=== CZEGO SZUKASZ? ===")
 u_genre = input(f"Gatunek ({'/'.join(unique_genres)}): ")
 try:
@@ -155,9 +149,8 @@ u_vec_nums_raw = np.array([u_year, u_length, u_budget])
 # Normalizacja wektora użytkownika TYMI SAMYMI parametrami co bazy
 u_vec_nums = (u_vec_nums_raw - feat_mean) / feat_std
 
-# ==========================================
 # 6. REKOMENDACJA I WYNIKI
-# ==========================================
+
 results = []
 
 for i, m in enumerate(movies):
