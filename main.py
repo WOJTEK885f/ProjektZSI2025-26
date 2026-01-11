@@ -14,7 +14,7 @@ class MovieApp(ctk.CTk):
         super().__init__()
 
         # Konfiguracja okna
-        self.title("AI Movie Recommender (Final Version)")
+        self.title("AI Movie Recommender")
         self.geometry("980x800") # Lekko poszerzyłem okno, żeby tabelka ładnie weszła
         self.resizable(True, True)
 
@@ -280,7 +280,7 @@ class MovieApp(ctk.CTk):
             results.append((m, final_score, ai_rating))
 
         results.sort(key=lambda x: x[1], reverse=True)
-        
+
         header = f"{'TYTUŁ':<25} {'GATUNEK':<10} {'ROK':<6} {'CZAS':<6} {'BUDŻET':<6} {'OCENA':<6} {'SCORE'}   {'AI PRED'}"
         self.log_msg("\n" + header)
         self.log_msg("-" * 105)
