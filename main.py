@@ -280,16 +280,13 @@ class MovieApp(ctk.CTk):
             results.append((m, final_score, ai_rating))
 
         results.sort(key=lambda x: x[1], reverse=True)
-
-        # --- ZMIANY W WYŚWIETLANIU ---
-        # Poszerzona linijka, dodane CZAS i pole m['length']
+        
         header = f"{'TYTUŁ':<25} {'GATUNEK':<10} {'ROK':<6} {'CZAS':<6} {'BUDŻET':<6} {'OCENA':<6} {'SCORE'}   {'AI PRED'}"
         self.log_msg("\n" + header)
         self.log_msg("-" * 105)
         
         for r in results[:10]:
             m, sc, ai = r
-            # Tutaj dodałem m['length']:<6
             line = f"{m['title'][:23]:<25} {m['genre'][:9]:<10} {m['year']:<6} {m['length']:<6} {m['budget']:<6} {m['rating']:<6} {sc:.3f}   {ai:.1f}"
             self.log_msg(line)
 
